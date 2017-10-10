@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7, IE=9, IE=10">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title></title>
+
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.20/3.20/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.20/3.20/esri/css/esri.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="agsjs/css/agsjs.css" />
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.20/3.20/dojox/layout/resources/ExpandoPane.css" type="text/css" />
+    <!-- <script type="text/javascript" src="http://localhost/arcgis_js_api/library/3.20/3.20/init.js"></script> -->
+
+    <script>
+        var dojoConfig = {
+            parseOnLoad: true
+        };
+    </script>
+    <!-- <script type="text/javascript" src="./js/toc.js"></script> -->
+    <script src="http://localhost/arcgis_js_api/library/3.20/3.20/init.js"></script>
+    <script>
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dojox.layout.ExpandoPane");
+        dojo.require("dijit.layout.TabContainer");
+        dojo.require("esri.map");
+        dojo.require("esri.arcgis.utils");
+        dojo.require("esri.IdentityManager");
+        dojo.require("dijit.layout.AccordionContainer");
+
+        dojo.require("dijit.TitlePane");
+        dojo.require("esri.dijit.Measurement");
+        dojo.require("esri.SnappingManager");
+        dojo.require("esri.dijit.Scalebar");
+        dojo.require("esri.layers.FeatureLayer");
+
+        dojo.require("dijit.TOC");
+
+        // var navToolbar;
+        // var navOption; // 当前选择的操作
+
+
+        require(["./js/app.js",
+                "esri/layers/ArcGISTiledMapServiceLayer",
+                "esri/toolbars/navigation",
+                "dojo/query",
+                'dojo/_base/fx',
+                "dojo/fx/easing",
+                "dijit/layout/BorderContainer",
+                "dijit/layout/ContentPane",
+                "esri/toolbars/draw",
+                "dojo/domReady!"
+            ],
+            function() {
+
+
+                // 这个示例可能需要处理通信与ArcGIS Server服务代理页面。您将需要更换以下链接的位置在你的机器上的代理.  
+                // 请参阅'Using the proxy page' 帮助主题 设立代理页面的详细信息.  
+                // esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
+                // esri.config.defaults.io.alwaysUseProxy = false;
+
+                // //此服务仅用于开发和测试目的。我们建议您创建您自己的geometry service在您的应用程序中使用  
+                // esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://localhost:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+
+
+            });
+    </script>
+
+    <!-- <script type="text/javascript">
+        var djConfig = {
+            parseOnLoad: true,
+            packages: [{
+                "name": "agsjs",
+                //if you want to host on your own server, download from
+                //http://gmaps-utility-gis.googlecode.com/svn/tags/agsjs/
+                // and put in folders then use path like: 
+                //"location": location.pathname.replace(/\/[^/]+$/, '') + '/../src/agsjs' 
+                // use /src/ for debug and /build/ for production.
+                // you can also use online version using the following location, 
+                // however please noted googlecode.com is not a true CDN and is not fast and may not be available.
+                // also, it is recommended to use a particular version from /tags/agsjs/<version>/
+                // in a production app to avoid unexpected results.
+                //"location": "http://gmaps-utility-gis.googlecode.com/svn/tags/agsjs/2.06/build/agsjs"
+                //"location": "http://gmaps-utility-gis.googlecode.com/svn/tags/agsjs/latest/build/agsjs"
+                //"location": "http://gmaps-utility-gis.googlecode.com/svn/trunk/agsjs/build/agsjs"
+                "location": location.pathname.replace(/\/[^/]+$/, '')
+            }]
+        };
+    </script> -->
+
+</head>
+
+<body class="claro">
+    <div id="mainWindow" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%;">
+
+        <div id="header" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'">
+            <div id="title">
+                湖北省影像控制点库管理系统v1.0
+            </div>
+        </div>
+
+        <div data-dojo-type="dijit.layout.ContentPane" id="leftPane" data-dojo-props="region:'left'">
+            <div id="toc" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%; margin:0;">
+
+                <div data-dojo-type="dijit.layout.ContentPane" id="leftInside" data-dojo-props="region:'left'" style="left:0px;top:0px;">
+                    <div id="buttonbox">
+                        <button data-dojo-type="dijit/form/Button">多边形</button>
+                        <button data-dojo-type="dijit/form/Button">徒手多边形</button>
+                        <button data-dojo-type="dijit/form/Button">删除选择结果</button>
+                        <!-- <div id="printButton"></div> -->
+                        <hr />
+                    </div>
+                    <div id="box">
+                        <div>所选控制点数为：<span id="numberOfPoints">0</span></div>
+                    </div>
+                    <div id="legend">
+                        <b>控制点类型：  </b>
+                        <img src="images/CircleBlue16.png" /> 加密点
+                        <!-- <img src="images/CircleBlue24.png" /> 100 -->
+                        <img src="images/CircleRed32.png" /> 采集点
+                    </div>
+                    <div id="grid" data-dojo-type="dojox/grid/DataGrid" data-dojo-id="gridWidget"></div>
+                </div>
+                <div id="RightInside" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'">
+                    <div id="zoomin" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/zoomin.gif" title="Zoom In: Drag a zoom rectangle on-map to zoom in" />
+                    </div>
+                    <div id="zoomout" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/zoomout.gif" title="Zoom Out: Drag a zoom rectangle on-map to zoom out and center" />
+                    </div>
+                    <div id="extent" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/web.gif" title="Full Extent: Zoom out to Full Extent" />
+                    </div>
+                    <div id="zoomprev" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/left.gif" title="前一视图" />
+                    </div>
+                    <div id="zoomnext" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/right.gif" title="后一视图" />
+                    </div>
+                    <div id="pan" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" title="漫游" src="images/hand.gif" />
+                    </div>
+                    <div id="deactivate" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; background-color:#DADADA; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/minus.gif" title="返回标准控制" />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- 添加一个地图操作导航条 -->
+
+        <!-- ==================== -->
+        <div data-dojo-type="dojox/layout/ExpandoPane" id="rightPane" data-dojo-props="region:'right',title:'快速查询',startExpanded:false">
+            <div data-dojo-type="dijit.layout.TabContainer">
+                <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 1', selected:'true'">
+                    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" style="width:35%;margin:5px;background-color:whitesmoke;">
+                        输入查询字段
+                        <input id="searchText" value="点号；图号；行政区" type="text" />
+                        <br />
+                        <input id="findBtn" type="button" value="查 找" />
+                        <input id="clearBtn" type="button" value="清 除" />
+                        <input id="printBtn" type="button" value="打 印" />
+                        <input id="printBtn2" type="button" value="打 印2" />
+                        <hr />
+                        <div id="contentsContainer"></div>
+                    </div>
+                </div>
+                <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 2'">
+                    <div id="tocDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="map" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'">
+            <div style="position:absolute; right:5px; top:5px; z-Index:999;">
+                <div id="titlePane" style="width: 210px;right:5px" data-dojo-type="dijit.TitlePane" data-dojo-props="title:'Measurement', closable:'true', open:false">
+                    <div id="measurementDiv" style="font-size:5px"></div>
+                    <span style="font-size:smaller;padding:5px 5px;">请用 <b>CTRL</b> 来开启snapping.</span>
+                </div>
+            </div>
+            <div id="pointInfo" style="position: absolute; left: 30px; visibility:visible; bottom: 2px; z-index: 100;"></div>
+            <div id="scaleInfo" style="position: absolute; right: 20px; visibility:visible; bottom: 2px; z-index: 100;"></div>
+        </div>
+
+        <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom'">
+
+            <span id="dataSource">
+        </span>
+        </div>
+
+    </div>
+</body>
+
+</html>
