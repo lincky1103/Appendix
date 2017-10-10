@@ -62,7 +62,7 @@
                 // 这个示例可能需要处理通信与ArcGIS Server服务代理页面。您将需要更换以下链接的位置在你的机器上的代理.  
                 // 请参阅'Using the proxy page' 帮助主题 设立代理页面的详细信息.  
                 // esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
-                // esri.config.defaults.io.alwaysUseProxy = false;
+                esri.config.defaults.io.alwaysUseProxy = false;
 
                 // //此服务仅用于开发和测试目的。我们建议您创建您自己的geometry service在您的应用程序中使用  
                 // esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://localhost:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer");

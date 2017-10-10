@@ -19,27 +19,37 @@ define(["./js/map.js", "dojo/on", "esri/map", "esri/toolbars/draw",
     query, domConstruct, Button
 ) {
     //parser.parse();
+
     //esriConfig.defaults.io.proxyUrl = "/proxy";
 
     var template = new PrintTemplate();
     template.format = "jpg";
     template.layout = "A4 Landscape";
     template.layoutOptions = {
-        "titleText": "Hubei_ControlPoint_Map",
+        "titleText": "点位示意图",
         "scalebarUnit": "Kilometers",
-        "copyrightText": "HBMAP.inc",
+        "copyrightText": "湖北省地图院",
         "showAttribution": true,
         "legendLayers": []
     }
 
     template.preserveScale = false;
-    template.exportOptions = { dpi: 300 };
+    //template.exportOptions = { dpi: 300 };
+    template.outScale = 24000;
 
     var params = new PrintParameters();
     params.map = myMap;
     params.template = template;
 
-    var printTask = new esri.tasks.PrintTask("http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
+    var printTask = new esri.tasks.PrintTask("http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task", {
+        mode: "async"
+    });
+
+    var basemap = myMap.getLayer("天地图底图");
+    if ((myMap.getScale() - basemap.maxScale) < 1) {
+        template.outScale = basemap.maxScale + 1;
+        template.preserveScale = true;
+    }
 
     // var printbutton = new Button({
     //     label: '打印',
