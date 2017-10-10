@@ -65,7 +65,7 @@ define([
                         break;
                 }
                 tb.activate(Draw[tool]);
-                //myMap.hideZoomSlider();
+                myMap.hideZoomSlider();
             }
         }
 
@@ -207,7 +207,7 @@ define([
             //Reset the divs to display 0
             var r = "0";
             dojo.byId('numberOfPoints').innerHTML = r;
-            dojo.byId('totalPopulation').innerHTML = r;
+            //dojo.byId('totalPopulation').innerHTML = r;
 
             drawTable();
         }

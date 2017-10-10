@@ -45,6 +45,10 @@ define(["./js/map.js", "dojo/on", "esri/map", "esri/toolbars/draw",
         mode: "async"
     });
 
+    // var printTask = new esri.tasks.PrintTask("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task", {
+    //     mode: "async"
+    // });
+
     var basemap = myMap.getLayer("天地图底图");
     if ((myMap.getScale() - basemap.maxScale) < 1) {
         template.outScale = basemap.maxScale + 1;
