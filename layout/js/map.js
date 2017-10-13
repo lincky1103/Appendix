@@ -254,7 +254,7 @@ define([
                         }, {
                             layer: aLayer,
                             title: "注记层",
-                            collapsed: true
+                            collapsed: false
                         }, {}
                     ]
                 }, 'tocDiv');

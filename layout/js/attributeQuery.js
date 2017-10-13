@@ -29,7 +29,7 @@ define(
             execute(document.getElementById('searchText').value);
         });
 
-        on(document.getElementById("clearBtn"), "click", clear);
+        on(document.getElementById("clearBtn"), "click", setPane);
 
         // 根据输入的关键字进行findTask操作
         function execute(searchText) {
@@ -170,6 +170,16 @@ define(
             document.getElementById('searchText').value = '';
             document.getElementById("contentsContainer").innerHTML = '';
         }
+
+        function setPane() {
+            cPane = dojo.dijit.registry.byId("rightPane");
+            cPane.set("title", "111");
+            document.getElementById("rightPane").style.width = "10%";
+            main = dojo.dijit.registry.byId("mainWindow");
+            // domGeom.setContentSize(cPane, { w: 50 });
+            main.layout();
+        }
+
 
         // 显示findTask的结果
         function showResults(results) {

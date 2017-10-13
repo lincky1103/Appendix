@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -107,25 +107,29 @@
 
         <div data-dojo-type="dijit.layout.ContentPane" id="leftPane" data-dojo-props="region:'left'">
             <div id="toc" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%; margin:0;">
-
-                <div data-dojo-type="dijit.layout.ContentPane" id="leftInside" data-dojo-props="region:'left'" style="left:0px;top:0px;">
-                    <div id="buttonbox">
-                        <button data-dojo-type="dijit/form/Button">多边形</button>
-                        <button data-dojo-type="dijit/form/Button">徒手多边形</button>
-                        <button data-dojo-type="dijit/form/Button">删除选择结果</button>
-                        <!-- <div id="printButton"></div> -->
-                        <hr />
+                <div data-dojo-type="dijit.layout.TabContainer" id="leftInside" data-dojo-props="region:'left'" style="left:0px;top:0px;">
+                    <div data-dojo-type="dijit.layout.ContentPane" id="tab1" data-dojo-props="title:'Tab 1', selected:'true'">
+                        <div id="tocDiv">
+                        </div>
                     </div>
-                    <div id="box">
-                        <div>所选控制点数为：<span id="numberOfPoints">0</span></div>
+                    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 2'">
+                        <div id="buttonbox">
+                            <button data-dojo-type="dijit/form/Button">多边形</button>
+                            <button data-dojo-type="dijit/form/Button">徒手多边形</button>
+                            <button data-dojo-type="dijit/form/Button">删除选择结果</button>
+                            <!-- <div id="printButton"></div> -->
+                        </div>
+                        <div id="box">
+                            <div>所选控制点数为：<span id="numberOfPoints">0</span></div>
+                        </div>
+                        <div id="legend">
+                            <b>控制点类型：  </b>
+                            <img src="images/CircleBlue16.png" /> 加密点
+                            <!-- <img src="images/CircleBlue24.png" /> 100 -->
+                            <img src="images/CircleRed32.png" /> 采集点
+                        </div>
+                        <div id="grid" data-dojo-type="dojox/grid/DataGrid" data-dojo-id="gridWidget" style="height:100%;"></div>
                     </div>
-                    <div id="legend">
-                        <b>控制点类型：  </b>
-                        <img src="images/CircleBlue16.png" /> 加密点
-                        <!-- <img src="images/CircleBlue24.png" /> 100 -->
-                        <img src="images/CircleRed32.png" /> 采集点
-                    </div>
-                    <div id="grid" data-dojo-type="dojox/grid/DataGrid" data-dojo-id="gridWidget"></div>
                 </div>
                 <div id="RightInside" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'">
                     <div id="zoomin" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
@@ -149,6 +153,10 @@
                     <div id="deactivate" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'false'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; background-color:#DADADA; vertical-align : middle; overflow: hidden;">
                         <img class="navItem" src="images/minus.gif" title="返回标准控制" />
                     </div>
+                    <hr>
+                    <div id="print" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/minus.gif" title="打印" />
+                    </div>
                 </div>
             </div>
 
@@ -157,7 +165,7 @@
         <!-- 添加一个地图操作导航条 -->
 
         <!-- ==================== -->
-        <div data-dojo-type="dojox/layout/ExpandoPane" id="rightPane" data-dojo-props="region:'right',title:'快速查询',startExpanded:false">
+        <div data-dojo-type="dojox/layout/ExpandoPane" id="rightPane" data-dojo-props="region:'right',title:'快速查询',startExpanded:false,splitter:true">
             <div data-dojo-type="dijit.layout.TabContainer">
                 <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 1', selected:'true'">
                     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" style="width:35%;margin:5px;background-color:whitesmoke;">
@@ -171,10 +179,7 @@
                         <div id="contentsContainer"></div>
                     </div>
                 </div>
-                <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 2'">
-                    <div id="tocDiv">
-                    </div>
-                </div>
+
             </div>
         </div>
 

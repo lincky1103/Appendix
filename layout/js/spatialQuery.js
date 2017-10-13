@@ -65,6 +65,7 @@ define([
                         break;
                 }
                 tb.activate(Draw[tool]);
+
                 myMap.hideZoomSlider();
             }
         }
