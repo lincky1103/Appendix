@@ -16,6 +16,7 @@ define([
         registry.forEach(function(d) {
             if (d.declaredClass === "dijit.form.Button") {
                 d.on("click", activateTool);
+
             }
         });
 
@@ -52,6 +53,7 @@ define([
         query.outFields = ["OBJECTID", "PointID", "PointType", "ImgResolut", "LON", "LAT", "GUIDE_1"];
 
         function activateTool() {
+
             var tool = null;
             if (this.label == "删除选择结果") {
                 remove();
@@ -64,6 +66,7 @@ define([
                         tool = "FREEHAND_POLYGON";
                         break;
                 }
+
                 tb.activate(Draw[tool]);
 
                 myMap.hideZoomSlider();

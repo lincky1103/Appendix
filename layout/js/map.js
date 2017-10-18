@@ -2,21 +2,29 @@ define([
         "dojo/parser",
         'dojo/_base/declare',
         "esri/map",
+        "esri/dijit/FeatureTable",
+        "esri/dijit/Scalebar",
         "esri/layers/ArcGISTiledMapServiceLayer",
         "esri/toolbars/navigation",
         "dojo/query",
         'dojo/_base/fx',
         "dojo/fx/easing",
+        "dijit/form/TextBox",
+        "dijit/form/Button",
         "dojo/domReady!"
     ],
     function(parser,
         declare,
         Map,
+        FeatureTable,
+        Scalebar,
         ArcGISTiledMapServiceLayer,
         Navigation,
         query,
         fx,
-        easing) {
+        easing,
+        TextBox,
+        Button) {
         parser.parse();
         var myMap;
         var toc;
@@ -34,11 +42,22 @@ define([
                 "wkid": 4490
             }
         });
+
         myMap = new Map("map", {
             extent: initExtent,
             logo: false,
             sliderStyle: "large"
         })
+
+        var scalebar = new Scalebar({
+            map: myMap,
+            // "dual" displays both miles and kilometers
+            // "english" is the default, which displays miles
+            // use "metric" for kilometers
+            scalebarUnit: "metric"
+        });
+
+
         var baseMap0 = new esri.layers.ArcGISTiledMapServiceLayer("http://localhost:6080/arcgis/rest/services/cpm/TDT_BaseMap/MapServer", {
             id: "天地图底图",
             visible: true
@@ -48,7 +67,8 @@ define([
             visble: true
         });
         var cpLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/cpm/MAP_BOUND/MapServer", {
-            id: "湖北省影像控制点"
+            id: "湖北省影像控制点",
+            outFields: ["PointID", "PointType", "MAPID_5", "LON", "LAT", "X", "Y", "Z", "ConSource", "PointMemo", "PAC"]
         });
 
         var aLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/cpm/MAP_ANNO/MapServer", {
@@ -57,7 +77,9 @@ define([
 
         var fcpLayer = new esri.layers.FeatureLayer("http://localhost:6080/arcgis/rest/services/cpm/MyMapPoint/MapServer/0", {
             mode: esri.layers.FeatureLayer.MODE_ONDEMAND, // 模式，请参考上一篇文章介绍
-            outFields: ["*"] // 字段
+            outFields: ["*"], // 字段
+            visible: true,
+            id: "fcLayer"
         });
 
 
@@ -77,6 +99,64 @@ define([
         myMap.reorderLayer(baseMap0, 0);
         //导航操作
         myMap.on('load', setupNavBar);
+
+        myMap.on("load", loadTable);
+
+        function loadTable() {
+            // create new FeatureTable and set its properties 
+            var myFeatureTable = new FeatureTable({
+                featureLayer: fcpLayer,
+                map: myMap,
+                showAttachments: true,
+                // only allows selection from the table to the map 
+                syncSelection: true,
+                zoomToSelection: true,
+                gridOptions: {
+                    allowSelectAll: true,
+                    allowTextSelection: true,
+                },
+                editable: true,
+                showRelatedRecords: true,
+                dateOptions: {
+                    // set date options at the feature table level 
+                    // all date fields will adhere this 
+                    datePattern: "MMMM d, y"
+                },
+                // define order of available fields. If the fields are not listed in 'outFields'
+                // then they will not be available when the table starts. 
+                outFields: ["PointID", "PointType", "LON", "LAT", "PAC"],
+                // use fieldInfos property to change field's label (column header), 
+                // the editability of the field, and to format how field values are displayed
+                fieldInfos: [{
+                        name: 'PointID',
+                        alias: '点号',
+                        editable: true,
+                        format: {
+                            template: "${value} sqft"
+                        }
+                    },
+                    {
+                        name: 'PointType',
+                        alias: '类型',
+                        format: {
+                            template: "${value} sqft"
+                        }
+                    },
+                    {
+                        name: 'PAC',
+                        format: {
+                            template: "${value} PAC"
+                        }
+                    }
+                ],
+            }, 'myTableNode');
+            // myFeatureTable.readOnly = false;
+            myFeatureTable.startup();
+            // listen to show-attachments event
+            myFeatureTable.on("show-attachments", function(evt) {
+                console.log("show-attachments event - ", evt);
+            });
+        }
 
         //显示经纬度范围
         dojo.connect(myMap, "onExtentChange", showExtent);
@@ -123,7 +203,7 @@ define([
         function navEvent(id) {
             switch (id) {
                 case 'pan':
-                    map.enablePan();
+                    myMap.enablePan();
                     navToolbar.activate(Navigation.PAN);
 
                     if (navOption) {
@@ -180,7 +260,7 @@ define([
                 "西: " + extent.xmax + "&nbsp;" +
                 "北: " + extent.ymax;
             //showExtent函数的最后一行显示在页面上添加完成字符串的“info”DIV坐标
-            dojo.byId("dataSource").innerHTML = s;
+            //dojo.byId("dataSource").innerHTML = s;
         }
 
         function showScaleInfo(evt) {

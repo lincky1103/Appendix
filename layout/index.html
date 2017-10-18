@@ -23,6 +23,7 @@
     </script>
     <!-- <script type="text/javascript" src="./js/toc.js"></script> -->
     <script src="http://localhost/arcgis_js_api/library/3.20/3.20/init.js"></script>
+    <script src="./js/jquery-3.2.1.min.js"></script>
     <script>
         dojo.require("dijit.layout.BorderContainer");
         dojo.require("dijit.layout.ContentPane");
@@ -114,7 +115,7 @@
                     </div>
                     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 2'">
                         <div id="buttonbox">
-                            <button data-dojo-type="dijit/form/Button">多边形</button>
+                            <button data-dojo-type="dijit/form/Button"><img src="images/CircleBlue16.png" />多边形</button>
                             <button data-dojo-type="dijit/form/Button">徒手多边形</button>
                             <button data-dojo-type="dijit/form/Button">删除选择结果</button>
                             <!-- <div id="printButton"></div> -->
@@ -194,10 +195,11 @@
             <div id="scaleInfo" style="position: absolute; right: 20px; visibility:visible; bottom: 2px; z-index: 100;"></div>
         </div>
 
-        <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom'">
+        <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true" style="height:20%">
+            <div id="myTableNode"></div>
+            <!-- <span id="dataSource">
+        </span> -->
 
-            <span id="dataSource">
-        </span>
         </div>
 
     </div>

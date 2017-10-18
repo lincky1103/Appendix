@@ -175,6 +175,7 @@ define(
             cPane = dojo.dijit.registry.byId("rightPane");
             cPane.set("title", "111");
             document.getElementById("rightPane").style.width = "10%";
+            // $('#rightPane').css("width", "10px");
             main = dojo.dijit.registry.byId("mainWindow");
             // domGeom.setContentSize(cPane, { w: 50 });
             main.layout();

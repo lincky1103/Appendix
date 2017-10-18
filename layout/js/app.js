@@ -1,4 +1,6 @@
-define(["./js/print.js",
+define([
+        // "./js/updateFeature.js",
+        "./js/print.js",
         "./js/spatialQuery.js",
         "./js/attributeQuery.js",
         "dojo/domReady!"
