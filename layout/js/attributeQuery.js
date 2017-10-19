@@ -29,7 +29,7 @@ define(
             execute(document.getElementById('searchText').value);
         });
 
-        on(document.getElementById("clearBtn"), "click", setPane);
+        on(document.getElementById("clearBtn"), "click", clear);
 
         // 根据输入的关键字进行findTask操作
         function execute(searchText) {
@@ -150,7 +150,7 @@ define(
                 for (var i in dictPAC) {
                     //alert(dictPAC[i]);
                     if (i.indexOf(searchText) >= 0) {
-                        alert(dictPAC[i]);
+                        alert(i + ':' + dictPAC[i]);
                         findParams.searchText = dictPAC[i];
 
                         break;

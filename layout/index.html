@@ -24,6 +24,7 @@
     <!-- <script type="text/javascript" src="./js/toc.js"></script> -->
     <script src="http://localhost/arcgis_js_api/library/3.20/3.20/init.js"></script>
     <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/TOC.js"></script>
     <script>
         dojo.require("dijit.layout.BorderContainer");
         dojo.require("dijit.layout.ContentPane");
@@ -40,7 +41,7 @@
         dojo.require("esri.dijit.Scalebar");
         dojo.require("esri.layers.FeatureLayer");
 
-        dojo.require("dijit.TOC");
+        //dojo.require("dijit.TOC");
 
         // var navToolbar;
         // var navOption; // 当前选择的操作
@@ -113,13 +114,12 @@
                         <div id="tocDiv">
                         </div>
                     </div>
-                    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 2'">
-                        <div id="buttonbox">
-                            <button data-dojo-type="dijit/form/Button"><img src="images/CircleBlue16.png" />多边形</button>
+                    <div data-dojo-type="dijit.layout.ContentPane" id="tab2" data-dojo-props="title:'Tab 2'">
+                        <!-- <div id="buttonbox">
+                            <button data-dojo-type="dijit/form/Button">多边形</button>
                             <button data-dojo-type="dijit/form/Button">徒手多边形</button>
-                            <button data-dojo-type="dijit/form/Button">删除选择结果</button>
-                            <!-- <div id="printButton"></div> -->
-                        </div>
+                            <button data-dojo-type="dijit/form/Button">删除结果</button>
+                        </div> -->
                         <div id="box">
                             <div>所选控制点数为：<span id="numberOfPoints">0</span></div>
                         </div>
@@ -155,8 +155,14 @@
                         <img class="navItem" src="images/minus.gif" title="返回标准控制" />
                     </div>
                     <hr>
-                    <div id="print" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
-                        <img class="navItem" src="images/minus.gif" title="打印" />
+                    <div id="polygonselect" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/polygon.png" title="多边形选择" />
+                    </div>
+                    <div id="freehand" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/freehand.png" title="徒手多边形选择" />
+                    </div>
+                    <div id="clearselect" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/clear.png" title="清除选择" />
                     </div>
                 </div>
             </div>
@@ -170,8 +176,8 @@
             <div data-dojo-type="dijit.layout.TabContainer">
                 <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 1', selected:'true'">
                     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" style="width:35%;margin:5px;background-color:whitesmoke;">
-                        输入查询字段
-                        <input id="searchText" value="点号；图号；行政区" type="text" />
+
+                        <input id="searchText" value="" type="text" title="输入查询字段" />
                         <br />
                         <input id="findBtn" type="button" value="查 找" />
                         <input id="clearBtn" type="button" value="清 除" />
@@ -180,7 +186,6 @@
                         <div id="contentsContainer"></div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -195,7 +200,7 @@
             <div id="scaleInfo" style="position: absolute; right: 20px; visibility:visible; bottom: 2px; z-index: 100;"></div>
         </div>
 
-        <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true" style="height:20%">
+        <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true" style="height:5%">
             <div id="myTableNode"></div>
             <!-- <span id="dataSource">
         </span> -->

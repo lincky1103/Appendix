@@ -13,10 +13,14 @@ define([
         var tb = new Draw(myMap);
         tb.on("draw-end", addGraphic);
 
+        on(document.getElementById("polygonselect"), "click", activatePolygon);
+        on(document.getElementById("freehand"), "click", activateFreehand);
+        on(document.getElementById("clearselect"), "click", remove);
+
+
         registry.forEach(function(d) {
             if (d.declaredClass === "dijit.form.Button") {
                 d.on("click", activateTool);
-
             }
         });
 
@@ -52,10 +56,26 @@ define([
         query.returnGeometry = true;
         query.outFields = ["OBJECTID", "PointID", "PointType", "ImgResolut", "LON", "LAT", "GUIDE_1"];
 
+        function activatePolygon() {
+            var tool = "POLYGON";
+            tb.activate(Draw[tool]);
+            p1 = dojo.dijit.registry.byId("tab2");
+            ct = dojo.dijit.registry.byId("leftInside");
+            ct.selectChild(p1);
+        }
+
+        function activateFreehand() {
+            var tool = "FREEHAND_POLYGON";
+            tb.activate(Draw[tool]);
+            p1 = dojo.dijit.registry.byId("tab2");
+            ct = dojo.dijit.registry.byId("leftInside");
+            ct.selectChild(p1);
+        }
+
         function activateTool() {
 
             var tool = null;
-            if (this.label == "删除选择结果") {
+            if (this.label == "删除结果") {
                 remove();
             } else {
                 switch (this.label) {
