@@ -99,6 +99,17 @@
 </head>
 
 <body class="claro">
+
+    <div id="main-loading">
+        <div class="app-name">
+            <span style="color:white">CP Manager Web Deom</span>
+        </div>
+        <img src="images/loading.gif">
+        <div class="loading-info">
+            <div class="loading"></div>
+        </div>
+    </div>
+
     <div id="mainWindow" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%;">
 
         <div id="header" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'">
@@ -110,7 +121,7 @@
         <div data-dojo-type="dijit.layout.ContentPane" id="leftPane" data-dojo-props="region:'left'">
             <div id="toc" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline'" style="width:100%; height:100%; margin:0;">
                 <div data-dojo-type="dijit.layout.TabContainer" id="leftInside" data-dojo-props="region:'left'" style="left:0px;top:0px;">
-                    <div data-dojo-type="dijit.layout.ContentPane" id="tab1" data-dojo-props="title:'Tab 1', selected:'true'">
+                    <div data-dojo-type="dijit.layout.ContentPane" id="tab1" data-dojo-props="title:'图层列表', selected:'true'">
                         <div id="tocDiv">
                         </div>
                     </div>
@@ -124,15 +135,15 @@
                             <div>所选控制点数为：<span id="numberOfPoints">0</span></div>
                         </div>
                         <div id="legend">
-                            <b>控制点类型：  </b>
+                            <b style="font-size:11pt">控制点类型：  </b>
                             <img src="images/CircleBlue16.png" /> 加密点
                             <!-- <img src="images/CircleBlue24.png" /> 100 -->
-                            <img src="images/CircleRed32.png" /> 采集点
-                        </div>
+                            <img src="images/CircleRed16.png" /> 采集点
+                        </div>z
                         <div id="grid" data-dojo-type="dojox/grid/DataGrid" data-dojo-id="gridWidget" style="height:100%;"></div>
                     </div>
                 </div>
-                <div id="RightInside" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'">
+                <div id="rightInside" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'">
                     <div id="zoomin" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
                         <img class="navItem" src="images/zoomin.gif" title="Zoom In: Drag a zoom rectangle on-map to zoom in" />
                     </div>
@@ -156,13 +167,16 @@
                     </div>
                     <hr>
                     <div id="polygonselect" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
-                        <img class="navItem" src="images/polygon.png" title="多边形选择" />
+                        <img class="navItem" src="images/polygon.gif" title="多边形选择" />
                     </div>
                     <div id="freehand" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
-                        <img class="navItem" src="images/freehand.png" title="徒手多边形选择" />
+                        <img class="navItem" src="images/freehand.gif" title="徒手多边形选择" />
                     </div>
                     <div id="clearselect" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
-                        <img class="navItem" src="images/clear.png" title="清除选择" />
+                        <img class="navItem" src="images/clear.gif" title="清除选择" />
+                    </div>
+                    <div id="print" data-dojo-type="dijit/layout/ContentPane" class="navItem" data-dojo-props="splitter:'true'" style="height: 30px; border: 1px solid #DADADA; padding: 5px; margin-bottom: 3px; vertical-align : middle; overflow: hidden;">
+                        <img class="navItem" src="images/print.gif" title="打印图件" />
                     </div>
                 </div>
             </div>
@@ -176,13 +190,9 @@
             <div data-dojo-type="dijit.layout.TabContainer">
                 <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Tab 1', selected:'true'">
                     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'" style="width:35%;margin:5px;background-color:whitesmoke;">
-
-                        <input id="searchText" value="" type="text" title="输入查询字段" />
-                        <br />
-                        <input id="findBtn" type="button" value="查 找" />
-                        <input id="clearBtn" type="button" value="清 除" />
-                        <input id="printBtn" type="button" value="打 印" />
-                        <hr />
+                        <div><input id="searchText" value="" type="text" title="输入查询字段" style="vertical-align:middle" /> <input id="findBtn" type="button" value="查 找" style="vertical-align:middle" /> <input id="clearBtn" type="button" value="清 除" style="vertical-align:middle"
+                            /></div>
+                        <hr/>
                         <div id="contentsContainer"></div>
                     </div>
                 </div>
@@ -197,7 +207,7 @@
                 </div>
             </div>
             <div id="pointInfo" style="position: absolute; left: 30px; visibility:visible; bottom: 2px; z-index: 100;"></div>
-            <div id="scaleInfo" style="position: absolute; right: 20px; visibility:visible; bottom: 2px; z-index: 100;"></div>
+            <div id="scaleInfo" style="position: absolute; right: 3%; visibility:visible; bottom: 3%; z-index: 100; background:#DADADA"></div>
         </div>
 
         <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom',splitter:true" style="height:5%">

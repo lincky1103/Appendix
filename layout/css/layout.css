@@ -33,14 +33,14 @@
           background-color: #FFF;
           color: #3f3f3f;
           border: solid 2px #224a54;
-          width: 15%;
+          width: 18%;
       }
       
       #leftPane {
           background-color: #FFF;
           color: #3f3f3f;
           border: solid 0px #224a54;
-          width: 25%;
+          width: 20%;
           margin: 0px;
           padding: 0;
       }
@@ -49,16 +49,16 @@
           background-color: #FFF;
           border: solid 2px #224a54;
           margin: 0;
-          width: 78%;
+          width: 83%;
           padding: 0;
       }
       
-      #RightInside {
+      #rightInside {
           background-color: #FFF;
           border: solid 0px #9B0909;
           margin-left: 2px;
           padding: 0;
-          width: 15%;
+          width: 12%;
       }
       
       #map {
@@ -94,4 +94,57 @@
       .dojoxGridSortNode,
       .dojoxGridCell {
           font-size: small;
+      }
+      /* #mainWindow {
+          display: none;
+      } */
+      
+      #main-loading {
+          /* display: none; */
+          width: 100%;
+          height: 100%;
+          background-color: #344357;
+          text-align: center;
+          overflow: hidden;
+      }
+      
+      #main-loading .app-name {
+          font: 36px arial;
+          font-weight: bold;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -204px;
+          margin-top: -135px;
+          z-index: 2;
+      }
+      
+      #main-loading img {
+          position: relative;
+          top: 34%;
+          height: 275px;
+          display: block;
+          margin: auto;
+      }
+      
+      #main-loading .loading-info {
+          font: 14px 'arial';
+          margin-top: 50px;
+          overflow: hidden;
+          position: relative;
+          top: 34%;
+      }
+      
+      #main-loading .loading-info .loading {
+          width: 260px;
+          height: 4px;
+          border-radius: 2px;
+          background-color: #192330;
+          margin: auto;
+      }
+      
+      #main-loading .loading-info .loading-progress {
+          height: 4px;
+          border-radius: 2px;
+          background-color: white;
       }

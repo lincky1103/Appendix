@@ -75,14 +75,16 @@ define([
             id: "注记层"
         });
 
-        var fcpLayer = new esri.layers.FeatureLayer("http://localhost:6080/arcgis/rest/services/cpm/MyMapPoint/MapServer/0", {
+        var fcpLayer = new esri.layers.FeatureLayer("http://localhost:6080/arcgis/rest/services/cpm/MyMapPoint/FeatureServer/0", {
             mode: esri.layers.FeatureLayer.MODE_ONDEMAND, // 模式，请参考上一篇文章介绍
             outFields: ["*"], // 字段
             visible: true,
             id: "fcLayer"
         });
 
-
+        fcpLayer.on('update', function() {
+            // alert('ok')
+        })
 
         //添加多层
         myMap.addLayer(baseMap0);
@@ -275,6 +277,8 @@ define([
 
 
         dojo.connect(myMap, "onLayersAddResult", function(results) {
+
+            document.getElementById('main-loading').style = 'display:none';
             // 所有图层使用map.addLayers方法添加到地图后触发
             //dojo.keys.copyKey maps to CTRL on windows and Cmd on Mac.
             var snapManager = myMap.enableSnapping({ // 激活按键，默认是ctrl键
@@ -304,6 +308,7 @@ define([
         // });
 
         var h = dojo.connect(myMap, 'onLayersAddResult', function(results) {
+
             // overwrite the default visibility of service.
             // TOC will honor the overwritten value.
             cpLayer.setVisibleLayers([2]);
@@ -372,5 +377,8 @@ define([
 
         // })
         // debugger
+
+        // document.getElementById('mainWindow').style = 'display:block';
+
         return myMap;
     });

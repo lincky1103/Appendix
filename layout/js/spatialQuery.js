@@ -47,7 +47,7 @@ define([
         var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.5]));
         var pntSym1 = new PictureMarkerSymbol("images/CircleBlue16.png", 16, 16);
         var pntSym2 = new PictureMarkerSymbol("images/CircleBlue24.png", 24, 24);
-        var pntSym3 = new PictureMarkerSymbol("images/CircleRed32.png", 32, 32);
+        var pntSym3 = new PictureMarkerSymbol("images/CircleRed16.png", 16, 16);
 
         // 初始化查询任务与查询参数   
         var queryTask = new QueryTask("http://localhost:6080/arcgis/rest/services/cpm/MyMapPoint/MapServer/0");
@@ -95,9 +95,9 @@ define([
 
         function setGridHeader() {
             var layout = [
-                { field: 'PointID', name: '点号', width: "100px", headerStyles: "text-align:center;" },
-                { field: 'PointType', name: '类型', width: "100px", headerStyles: "text-align:center;" },
-                { field: 'ImgResolut', name: '分辨率', width: "100px", headerStyles: "text-align:center;" }
+                { field: 'PointID', name: '点号', width: "150px", headerStyles: "text-align:center;" },
+                { field: 'PointType', name: '类型', width: "60px", headerStyles: "text-align:center;" },
+                { field: 'ImgResolut', name: '分辨率', width: "60px", headerStyles: "text-align:center;" }
             ];
 
             gridWidget.setStructure(layout);

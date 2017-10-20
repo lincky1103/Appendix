@@ -62,7 +62,7 @@ define(["./js/map.js", "dojo/on", "esri/map", "esri/toolbars/draw",
     //     }
     // }, document.getElementById("printButton"));
 
-    on(document.getElementById("printBtn"), "click", printStart);
+    on(document.getElementById("print"), "click", printStart);
 
     function printResult(result) {
         window.open(result.url, "_blank");
